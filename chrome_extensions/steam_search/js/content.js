@@ -96,38 +96,69 @@ chrome.runtime.onMessage.addListener(function (msg) {
       toggle();
 }});
 
+
+if(currentUrl.includes("hentai3z.xyz")){
+    var element = document.querySelector('.c-sub-header-nav.with-border');
+    if(element){
+        element.remove();
+    }
+}
+
 function isHentai3z(){
-    if(currentUrl.includes("hentai3z.xyz")){
-        var element = document.querySelector('.c-sub-header-nav.with-border');
-        if(element){
-            element.remove();
-        }
-        if(currentUrl.includes("/manga")){
-            var title = element.getElementById('chapter-heading');
-            if(title){
-                MANGATITLE = title.innerText;
-                copyTextToClipboard(MANGATITLE);
-            }
+    if(currentUrl.includes("hentai3z.xyz/manga")){
+        var title = document.getElementById('chapter-heading');
+        if(title){
+            MANGATITLE = title.innerText;
+            copyTextToClipboard(MANGATITLE);
         }
     }
 }
 
-
-
-document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'visible') {
-      setTimeout(() => {
-        // copyTextToClipboard('tab?');
-      }, 200);
+function isManganato(){
+    if(currentUrl.includes("chapmanganato.to") && currentUrl.includes("chapter")) {
+        var title = document.querySelector('.panel-chapter-info-top h1');
+        if(title) {
+            MANGATITLE = title.innerText;
+            copyTextToClipboard(MANGATITLE);
+        }
     }
-});
+}
+
+function isAsura() {
+    if(currentUrl.includes("asuracomic.net") && currentUrl.includes("chapter")) {
+        var title = document.querySelector('h2');
+        if(title) {
+            MANGATITLE = title.innerText;
+            copyTextToClipboard(MANGATITLE);
+        }
+    }
+}
+
+setTimeout(() => {
+    document.addEventListener('visibilitychange', () => {
+        console.log(document.visibilityState)
+        if (document.visibilityState === 'visible') {
+        setTimeout(() => {
+            mangaWebsites();
+        }, 200);
+        }
+    });
+}, 0);
+
 // copyTextToClipboard("somthing");
 function copyTextToClipboard(text) {
-    navigator.clipboard.writeText(text).then(() => {
-        console.log("Text copied to clipboard!",text);
-    }).catch(err => {
-        console.error("Failed to copy text: ", err);
-    });
+    if (document.hasFocus()) {
+        navigator.clipboard.writeText(text).then(() => {
+            console.log("Text - ",text);
+        }).catch(err => {
+            console.error("Failed to copy text: ", err);
+        });
+    }
+}
+mangaWebsites();
+function mangaWebsites() {
+    isHentai3z();
+    isManganato();
+    isAsura();
 }
 
-isHentai3z();
