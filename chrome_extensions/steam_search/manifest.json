@@ -16,7 +16,7 @@
     "background": {
         "service_worker": "background.js"
     },
-    "permissions":["commands","clipboardWrite"],
+    "permissions":["commands","clipboardWrite","clipboardRead"],
     "host_permissions":[ "<all_urls>" ],
     "content_scripts":[{ 
         "run_at": "document_idle",
