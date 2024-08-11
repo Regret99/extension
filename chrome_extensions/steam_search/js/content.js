@@ -97,16 +97,16 @@ chrome.runtime.onMessage.addListener(function (msg) {
 }});
 
 
-if(currentUrl.includes("hentai3z.xyz")){
+if(currentUrl.includes("hentai20.io")){
     var element = document.querySelector('.c-sub-header-nav.with-border');
     if(element){
         element.remove();
     }
 }
 
-function isHentai3z(){
-    if(currentUrl.includes("hentai3z.xyz/manga")){
-        var title = document.getElementById('chapter-heading');
+function hentai20(){
+    if(currentUrl.includes("hentai20.io") && currentUrl.includes("chapter")){
+        var title = document.querySelector('.entry-title');
         if(title){
             MANGATITLE = title.innerText;
             copyTextToClipboard(MANGATITLE);
@@ -157,7 +157,7 @@ function copyTextToClipboard(text) {
 }
 mangaWebsites();
 function mangaWebsites() {
-    isHentai3z();
+    hentai20();
     isManganato();
     isAsura();
 }
