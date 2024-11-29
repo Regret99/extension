@@ -114,6 +114,37 @@ function hentai20(){
     }
 }
 
+if(currentUrl.includes("hentai20.io") && currentUrl.includes("manga")){
+    var selector = document.querySelector("#chapterlist");
+    if(selector) {
+        var latestChapNum = selector.querySelector('ul li').getAttribute('data-num');
+        var latestChapDiv = selector.querySelector('.eph-num');
+        var topNextChapBtnContainer = document.querySelectorAll('.lastend .inepcx')[1];
+        var topNextChapBtnAnchor = topNextChapBtnContainer.querySelector('a');
+        var topNextChapBtnAnchorHref = topNextChapBtnAnchor.href;
+        var newHref = '';
+        var splitedUrl = topNextChapBtnAnchorHref.split('-');
+        splitedUrl.pop();
+        splitedUrl.push(""+ (parseInt(latestChapNum)+1)+"/");
+        newHref = splitedUrl.join("-");
+        topNextChapBtnAnchor.href = newHref;
+        topNextChapBtnContainer.querySelector('.epcurlast').innerText = 'Chapter ' + (parseInt(latestChapNum)+1) 
+
+    }
+}
+
+function createButton(id, selector,btnClass,position="beforeend",style="",callback="") {
+    let btn = document.createElement('button');
+    btn.setAttribute('style', style);
+    btn.setAttribute('class', btnClass);
+    btn.setAttribute("id", id);
+    btn.innerHTML = 'Chapter +1?';
+    selector.insertAdjacentElement(position, btn);
+    if(callback !="") {
+        callback();
+    }
+}
+
 function isManganato(){
     if(currentUrl.includes("chapmanganato.to") && currentUrl.includes("chapter")) {
         var title = document.querySelector('.panel-chapter-info-top h1');
