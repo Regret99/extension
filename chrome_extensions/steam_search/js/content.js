@@ -155,9 +155,9 @@ function isManganato(){
     }
 }
 
-function isAsura() {
-    if(currentUrl.includes("asuracomic.net") && currentUrl.includes("chapter")) {
-        var title = document.querySelector('h2');
+function isNatoManga() {
+    if(currentUrl.includes("natomanga.com") && currentUrl.includes('manga') && currentUrl.includes("chapter-")) {
+        var title = document.querySelector('.info-top-chapter h2');
         if(title) {
             MANGATITLE = title.innerText;
             copyTextToClipboard(MANGATITLE);
@@ -165,6 +165,24 @@ function isAsura() {
     }
 }
 
+function isAsura() {
+    if(currentUrl.includes("asuracomic.net") && currentUrl.includes("chapter")) {
+        // var title = document.querySelector('h2');
+        // if(title) {
+        //     MANGATITLE = title.innerText;
+        //     copyTextToClipboard(MANGATITLE);
+        // }
+        const xpathExpression = '/html/body/div[4]/div/div/div/h2[1]';
+        const MANGATITLE = getTextByXPath(xpathExpression);
+        if (MANGATITLE) {
+            copyTextToClipboard(MANGATITLE);
+        }
+    }
+}
+function getTextByXPath(xpath) {
+    const result = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
+    return result.singleNodeValue ? result.singleNodeValue.textContent : null;
+}
 setTimeout(() => {
     document.addEventListener('visibilitychange', () => {
         console.log(document.visibilityState)
@@ -191,5 +209,6 @@ function mangaWebsites() {
     hentai20();
     isManganato();
     isAsura();
+    isNatoManga();
 }
 
